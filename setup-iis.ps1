@@ -12,4 +12,7 @@ Remove-Website -Name *
 
 # Create the new site
 $path = Get-Item ($websitePath + "\wwwroot")
-New-Item $site -bindings @{protocol="http";bindingInformation="*:8080:*"} -physicalPath $path
+New-Item $site -bindings @{protocol="http";bindingInformation="*:80:*"} -physicalPath $path
+
+# Open firewall
+New-NetFirewallRule -DisplayName 'Web Inbound' -Profile @('Public') -Direction Inbound -Action Allow -Protocol TCP -LocalPort @('80')
